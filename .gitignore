@@ -1,0 +1,27 @@
+# ===== Backend (Java / Spring Boot) =====
+target/
+build/
+.gradle/
+*.class
+*.log
+
+# ===== Frontend (Node / Vite) =====
+node_modules/
+dist/
+npm-debug.log*
+
+# ===== Secretos y configuración local =====
+.env
+.env.*
+!.env.example
+application-local.properties
+application-local.yml
+
+# ===== IDEs =====
+.idea/
+*.iml
+.vscode/
+
+# ===== Sistema operativo =====
+Thumbs.db
+.DS_Store
