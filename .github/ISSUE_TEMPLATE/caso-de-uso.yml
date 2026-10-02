@@ -1,0 +1,93 @@
+name: Caso de uso
+description: Especificación de un caso de uso (CU) del MVP
+title: "[CUxx] "
+labels: ["tipo:caso-de-uso"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Un CU pasa a **Especificado** cuando tiene todos estos campos y otra persona del equipo lo revisó.
+        Ponle el código en el título, por ejemplo `[CU03] Registrar cliente`, y agrega a mano las etiquetas `modulo:Mx` y `RFxx`.
+
+  - type: dropdown
+    id: modulo
+    attributes:
+      label: Módulo
+      options:
+        - M1 - Autenticación y registro de clientes
+        - M2 - Consulta y edición de clientes
+        - M3 - Registro y consulta de ventas
+        - M4 - Dashboard básico
+    validations:
+      required: true
+
+  - type: dropdown
+    id: requisito
+    attributes:
+      label: Requisito (RF)
+      options:
+        - RF01 - Inicio de sesión
+        - RF02 - Registro de clientes
+        - RF03 - Consulta de clientes
+        - RF04 - Edición de clientes
+        - RF05 - Registro de ventas
+        - RF06 - Consulta de ventas
+        - RF07 - Dashboard básico
+    validations:
+      required: true
+
+  - type: input
+    id: actor
+    attributes:
+      label: Actor
+      description: Quién ejecuta el caso de uso.
+      placeholder: Usuario comercial
+    validations:
+      required: true
+
+  - type: textarea
+    id: precondiciones
+    attributes:
+      label: Precondiciones
+      description: Lo que debe cumplirse antes de empezar.
+      placeholder: |
+        - El usuario inició sesión.
+        - Existe al menos un cliente registrado.
+    validations:
+      required: true
+
+  - type: textarea
+    id: flujo-principal
+    attributes:
+      label: Flujo principal
+      description: Pasos del camino normal, numerados.
+      placeholder: |
+        1. El usuario abre el formulario.
+        2. El usuario completa los datos.
+        3. El sistema valida y guarda.
+        4. El sistema muestra la confirmación.
+    validations:
+      required: true
+
+  - type: textarea
+    id: flujos-alternativos
+    attributes:
+      label: Flujos alternativos
+      description: Qué pasa cuando algo no sale como se espera. Si no hay, escribe "Ninguno".
+      placeholder: |
+        3a. Dato inválido: el sistema muestra el error y no guarda.
+        3b. Dato duplicado: el sistema avisa y no crea un segundo registro.
+    validations:
+      required: true
+
+  - type: textarea
+    id: criterios-aceptacion
+    attributes:
+      label: Criterios de aceptación
+      description: Condiciones que se prueban para marcar el CU como Validado. Una casilla por criterio.
+      placeholder: |
+        - [ ] Se puede completar el flujo principal.
+        - [ ] Los datos inválidos muestran un mensaje claro.
+        - [ ] El registro queda guardado en la base.
+    validations:
+      required: true
