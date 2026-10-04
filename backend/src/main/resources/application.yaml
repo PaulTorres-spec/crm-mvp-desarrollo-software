@@ -11,3 +11,7 @@ spring:
     hibernate:
       ddl-auto: validate
     open-in-view: false
+    
+jwt:
+  secreto: ${JWT_SECRET}
+  expiracion-segundos: 28800
