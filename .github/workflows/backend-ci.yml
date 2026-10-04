@@ -28,6 +28,7 @@ jobs:
       DB_URL: jdbc:postgresql://localhost:5432/crm_db
       DB_USER: crm
       DB_PASSWORD: crm_ci
+      JWT_SECRET: Y2xhdmUtZGUtcHJ1ZWJhLXNvbG8tcGFyYS1lbC1jaS1uby1lcy1zZWNyZXRh
 
     defaults:
       run:
