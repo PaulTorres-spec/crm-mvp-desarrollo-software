@@ -1,0 +1,193 @@
+/* Tema SELVATICA sobre Bootstrap 5.3 — colores y fuentes del prototipo en Figma */
+
+:root {
+  /* Paleta de marca */
+  --sel-negro: #0a0908;
+  --sel-vino: #49111c;
+  --sel-vino-oscuro: #370d15;
+  --sel-humo: #f2f4f3;
+  --sel-arena: #a9927d;
+  --sel-cafe: #5e503f;
+  --sel-rojo: #d71920;
+  --sel-borde: #ddd6ce;
+  --sel-vino-suave: #f3e7e9;
+  --sel-arena-suave: #efe8e0;
+  --sel-rojo-suave: #fce8e9;
+  --sel-exito: #2f6b4f;
+  --sel-exito-suave: #e5f1ea;
+
+  /* Bootstrap: colores base */
+  --bs-primary: var(--sel-vino);
+  --bs-primary-rgb: 73, 17, 28;
+  --bs-secondary: var(--sel-cafe);
+  --bs-secondary-rgb: 94, 80, 63;
+  --bs-danger: var(--sel-rojo);
+  --bs-danger-rgb: 215, 25, 32;
+  --bs-success: var(--sel-exito);
+  --bs-success-rgb: 47, 107, 79;
+  --bs-body-bg: var(--sel-humo);
+  --bs-body-color: var(--sel-negro);
+  --bs-secondary-color: var(--sel-cafe);
+  --bs-border-color: var(--sel-borde);
+  --bs-border-radius: 0.5rem;
+  --bs-link-color: var(--sel-vino);
+  --bs-link-color-rgb: 73, 17, 28;
+  --bs-link-hover-color: var(--sel-rojo);
+  --bs-link-hover-color-rgb: 215, 25, 32;
+  --bs-form-invalid-color: var(--sel-rojo);
+  --bs-form-invalid-border-color: var(--sel-rojo);
+
+  /* Tipografía */
+  --bs-body-font-family: "Fira Sans", system-ui, sans-serif;
+  --bs-body-font-size: 0.875rem;
+  --sel-fuente-marca: "Montserrat", "Fira Sans", sans-serif;
+}
+
+/* Botones: Bootstrap define los colores dentro de cada clase .btn-* */
+.btn {
+  font-weight: 600;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--sel-vino);
+  --bs-btn-border-color: var(--sel-vino);
+  --bs-btn-hover-bg: var(--sel-vino-oscuro);
+  --bs-btn-hover-border-color: var(--sel-vino-oscuro);
+  --bs-btn-active-bg: var(--sel-vino-oscuro);
+  --bs-btn-active-border-color: var(--sel-vino-oscuro);
+  --bs-btn-disabled-bg: var(--sel-vino);
+  --bs-btn-disabled-border-color: var(--sel-vino);
+  --bs-btn-focus-shadow-rgb: 73, 17, 28;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--sel-vino);
+  --bs-btn-border-color: var(--sel-vino);
+  --bs-btn-hover-bg: var(--sel-vino);
+  --bs-btn-hover-border-color: var(--sel-vino);
+  --bs-btn-active-bg: var(--sel-vino);
+  --bs-btn-active-border-color: var(--sel-vino);
+  --bs-btn-focus-shadow-rgb: 73, 17, 28;
+}
+
+.btn-danger {
+  --bs-btn-bg: var(--sel-rojo);
+  --bs-btn-border-color: var(--sel-rojo);
+  --bs-btn-hover-bg: #b5151b;
+  --bs-btn-hover-border-color: #b5151b;
+}
+
+/* Campos de formulario: foco con los colores de marca */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--sel-arena);
+  box-shadow: 0 0 0 0.2rem rgba(73, 17, 28, 0.15);
+}
+
+/* Títulos y tarjetas */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--sel-negro);
+}
+
+.card {
+  --bs-card-border-color: var(--sel-borde);
+  --bs-card-border-radius: 0.75rem;
+}
+
+/* ===== Esqueleto de la aplicación ===== */
+.sel-sidebar {
+  width: 248px;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.75rem 1rem 1.5rem;
+  background: var(--sel-negro);
+  color: #fff;
+}
+
+.sel-marca-texto {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.sel-menu-titulo {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sel-arena);
+}
+
+.sel-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+}
+
+.sel-nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.sel-nav-link.active {
+  background: var(--sel-vino);
+  color: #fff;
+  box-shadow: inset 3px 0 0 var(--sel-rojo);
+}
+
+.sel-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 64px;
+  padding: 0 1rem;
+  background: #fff;
+  border-bottom: 1px solid var(--sel-borde);
+}
+
+@media (min-width: 992px) {
+  .sel-topbar {
+    height: 76px;
+    padding: 0 2rem;
+  }
+}
+
+.sel-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--sel-vino-suave);
+  color: var(--sel-vino);
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+/* Menú móvil: se desliza desde la izquierda */
+.sel-offcanvas {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1045;
+  display: flex;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+}
+
+.sel-offcanvas.abierto {
+  transform: none;
+}
