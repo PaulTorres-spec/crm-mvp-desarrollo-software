@@ -1,26 +1,24 @@
-import { useEffect, useState } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 
-function App() {
-  const [estado, setEstado] = useState('Consultando...')
+import LoginPage from './pages/LoginPage.jsx'
+import DashboardPage from './pages/DashboardPage.jsx'
+import ClientesPage from './pages/ClientesPage.jsx'
+import ClienteNuevoPage from './pages/ClienteNuevoPage.jsx'
+import VentasPage from './pages/VentasPage.jsx'
+import NoEncontradaPage from './pages/NoEncontradaPage.jsx'
 
-  useEffect(() => {
-    fetch('/api/health')
-      .then((respuesta) => {
-        if (!respuesta.ok) throw new Error('HTTP ' + respuesta.status)
-        return respuesta.json()
-      })
-      .then((datos) => setEstado(datos.status))
-      .catch(() => setEstado('Sin conexión con el backend'))
-  }, [])
-
+export default function App() {
   return (
-    <div className="container py-5">
-      <h1>CRM Textil El Amazonas</h1>
-      <p>
-        Estado del backend: <strong>{estado}</strong>
-      </p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/clientes" element={<ClientesPage />} />
+        <Route path="/clientes/nuevo" element={<ClienteNuevoPage />} />
+        <Route path="/ventas" element={<VentasPage />} />
+        <Route path="*" element={<NoEncontradaPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
