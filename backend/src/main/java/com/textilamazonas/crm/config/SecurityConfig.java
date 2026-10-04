@@ -34,17 +34,21 @@ public class SecurityConfig {
 
     /** Qué rutas son públicas y cuáles exigen token. */
     @Bean
-    SecurityFilterChain filtrosDeSeguridad(HttpSecurity http) throws Exception {
+    SecurityFilterChain filtrosDeSeguridad(HttpSecurity http, ErroresSeguridad errores) throws Exception {
         http
-            // CSRF protege formularios con cookies; esta API usa tokens, no cookies
             .csrf(csrf -> csrf.disable())
-            // Sin sesión en el servidor: cada petición trae su propio token
             .sessionManagement(sesion -> sesion.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(rutas -> rutas
                 .requestMatchers("/api/health", "/api/auth/login").permitAll()
                 .anyRequest().authenticated())
-            // Valida el JWT que llega en la cabecera "Authorization: Bearer <token>"
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+            // Nuestras respuestas 401/403 con el formato del contrato
+            .exceptionHandling(e -> e
+                .authenticationEntryPoint(errores)
+                .accessDeniedHandler(errores))
+            .oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(Customizer.withDefaults())
+                .authenticationEntryPoint(errores)
+                .accessDeniedHandler(errores));
         return http.build();
     }
 
