@@ -7,6 +7,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import org.springframework.http.HttpStatus;
+import com.textilamazonas.crm.auth.CredencialesInvalidasException;
+
 /**
  * Convierte las excepciones en respuestas con el formato estándar de error.
  */
@@ -21,5 +24,11 @@ public class ManejadorGlobalErrores {
                 .toList();
         return ResponseEntity.badRequest()
                 .body(ErrorRespuesta.de(400, "VALIDACION", "Hay campos con errores.", errores));
+    }
+        /** 401: el login falló (mismo mensaje para correo o contraseña incorrectos). */
+    @ExceptionHandler(CredencialesInvalidasException.class)
+    public ResponseEntity<ErrorRespuesta> credencialesInvalidas(CredencialesInvalidasException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorRespuesta.de(401, "NO_AUTENTICADO", ex.getMessage(), List.of()));
     }
 }
