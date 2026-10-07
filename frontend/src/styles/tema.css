@@ -191,3 +191,43 @@ h1, h2, h3, h4, h5, h6 {
 .sel-offcanvas.abierto {
   transform: none;
 }
+
+/* Pantalla de inicio de sesión (01 Login del prototipo) */
+.sel-login-marca {
+  width: 640px;
+  max-width: 45%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4rem;
+  background: var(--sel-vino);
+  color: #fff;
+}
+
+.sel-login-titulo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.sel-login-linea {
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin-top: 1.5rem;
+  background: var(--sel-rojo);
+}
+
+.sel-login-tarjeta {
+  width: 100%;
+  max-width: 440px;
+  /* Dentro de la tarjeta el "fondo base" es blanco: la tarjeta y sus campos quedan blancos */
+  --bs-body-bg: #fff;
+  --bs-card-border-radius: 0.75rem;
+}
+
+.sel-login-tarjeta .form-control {
+  font-size: var(--bs-body-font-size);
+  padding: 0.6rem 0.75rem;
+}
