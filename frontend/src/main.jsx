@@ -12,9 +12,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/tema.css'
 
 import App from './App.jsx'
+import SesionProvider from './sesion/SesionProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <SesionProvider>
+      <App />
+    </SesionProvider>
   </StrictMode>,
 )

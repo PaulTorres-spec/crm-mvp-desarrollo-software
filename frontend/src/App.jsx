@@ -8,6 +8,7 @@ import VentasPage from './pages/VentasPage.jsx'
 import NoEncontradaPage from './pages/NoEncontradaPage.jsx'
 
 import AppLayout from './layouts/AppLayout.jsx'
+import RutaProtegida from './components/RutaProtegida.jsx'
 
 export default function App() {
   return (
@@ -16,11 +17,13 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-        <Route element={<AppLayout />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/clientes" element={<ClientesPage />} />
-          <Route path="/clientes/nuevo" element={<ClienteNuevoPage />} />
-          <Route path="/ventas" element={<VentasPage />} />
+        <Route element={<RutaProtegida />}>
+          <Route element={<AppLayout />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/clientes" element={<ClientesPage />} />
+            <Route path="/clientes/nuevo" element={<ClienteNuevoPage />} />
+            <Route path="/ventas" element={<VentasPage />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NoEncontradaPage />} />

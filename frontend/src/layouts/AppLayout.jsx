@@ -4,6 +4,24 @@ import isotipoNegativo from '../assets/logo/selvatica-isotipo-negativo.svg'
 import isotipoColor from '../assets/logo/selvatica-isotipo-color.svg'
 import MenuNavegacion from '../components/MenuNavegacion.jsx'
 import { IconoCerrar, IconoMenu, IconoSalir } from '../components/Iconos.jsx'
+import { useSesion } from '../sesion/useSesion.js' // ← 1. la sesión
+
+// ← 2. Textos para mostrar el rol que llega de la API
+const NOMBRE_ROL = {
+  COMERCIAL: 'Comercial',
+  GERENCIA: 'Gerencia',
+  ADMIN: 'Administrador',
+}
+
+/** "María Quispe" → "MQ" (dos primeras palabras). */
+function iniciales(nombre = '') {
+  return nombre
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((palabra) => palabra[0].toUpperCase())
+    .join('')
+}
 
 function Marca() {
   return (
@@ -30,13 +48,15 @@ function ContenidoMenu({ alNavegar, alCerrarSesion }) {
 export default function AppLayout() {
   const [menuAbierto, setMenuAbierto] = useState(false)
   const navigate = useNavigate()
+  const { usuario, cerrarSesion: terminarSesion } = useSesion()
 
   const cerrarMenu = () => setMenuAbierto(false)
 
-  // CU02: en el paso 6 aquí también se borrará el token
+  // ← 3. CU02 Cerrar sesión: borrar el token y volver al login
   const cerrarSesion = () => {
     cerrarMenu()
-    navigate('/login')
+    terminarSesion()
+    navigate('/login', { replace: true })
   }
 
   return (
@@ -68,11 +88,12 @@ export default function AppLayout() {
           <img src={isotipoColor} alt="" width="28" height="28" className="d-lg-none" />
           <span className="sel-marca-texto text-body d-lg-none">CRM Amazonas</span>
 
+          {/* ← 4. Usuario real de la sesión (antes era "María Quispe" fijo) */}
           <div className="ms-auto d-flex align-items-center gap-2">
-            <span className="sel-avatar">MQ</span>
+            <span className="sel-avatar">{iniciales(usuario?.nombre)}</span>
             <div className="lh-sm d-none d-sm-block">
-              <div className="fw-medium">María Quispe</div>
-              <small className="text-secondary">Comercial</small>
+              <div className="fw-medium">{usuario?.nombre}</div>
+              <small className="text-secondary">{NOMBRE_ROL[usuario?.rol] ?? usuario?.rol}</small>
             </div>
           </div>
         </header>
