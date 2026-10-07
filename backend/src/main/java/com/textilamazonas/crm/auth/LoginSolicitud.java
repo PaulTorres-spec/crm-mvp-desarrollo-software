@@ -12,4 +12,11 @@ public record LoginSolicitud(
 
         @NotBlank(message = "Ingresa tu contraseña.")
         String contrasena) {
+
+    /** Constructor compacto: quita espacios al inicio y al final del correo antes de validarlo. */
+    public LoginSolicitud {
+        if (correo != null) {
+            correo = correo.trim();
+        }
+    }
 }
