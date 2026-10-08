@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.http.HttpStatus;
 import com.textilamazonas.crm.auth.CredencialesInvalidasException;
 
+import com.textilamazonas.crm.cliente.DocumentoDuplicadoException;
+
 /**
  * Convierte las excepciones en respuestas con el formato estándar de error.
  */
@@ -30,5 +32,14 @@ public class ManejadorGlobalErrores {
     public ResponseEntity<ErrorRespuesta> credencialesInvalidas(CredencialesInvalidasException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ErrorRespuesta.de(401, "NO_AUTENTICADO", ex.getMessage(), List.of()));
+    }
+
+        /** 409: el número de documento ya está registrado (CU04). */
+    @ExceptionHandler(DocumentoDuplicadoException.class)
+    public ResponseEntity<ErrorRespuesta> duplicado(DocumentoDuplicadoException ex) {
+        List<ErrorRespuesta.CampoError> errores =
+                List.of(new ErrorRespuesta.CampoError("numeroDocumento", ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ErrorRespuesta.de(409, "DUPLICADO", ex.getMessage(), errores));
     }
 }
