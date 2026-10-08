@@ -79,3 +79,38 @@ export function IconoCandado() {
     </svg>
   )
 }
+
+export function IconoAgregar() {
+  return (
+    <svg {...base} width={18} height={18}>
+      <path d="M12 5v14" />
+      <path d="M5 12h14" />
+    </svg>
+  )
+}
+
+export function IconoVolver() {
+  return (
+    <svg {...base} width={16} height={16}>
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  )
+}
+
+export function IconoCheck() {
+  return (
+    <svg {...base} width={16} height={16}>
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  )
+}
+
+export function IconoAlerta() {
+  return (
+    <svg {...base}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 8v4" />
+      <path d="M12 16h.01" />
+    </svg>
+  )
+}
