@@ -10,6 +10,9 @@ import NoEncontradaPage from './pages/NoEncontradaPage.jsx'
 import AppLayout from './layouts/AppLayout.jsx'
 import RutaProtegida from './components/RutaProtegida.jsx'
 
+import RutaConPermiso from './components/RutaConPermiso.jsx'
+import { puedeRegistrarClientes } from './sesion/permisos.js'
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,7 +24,18 @@ export default function App() {
           <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/clientes" element={<ClientesPage />} />
-            <Route path="/clientes/nuevo" element={<ClienteNuevoPage />} />
+            <Route
+              path="/clientes/nuevo"
+              element={
+                <RutaConPermiso
+                  permiso={puedeRegistrarClientes}
+                  redirigirA="/clientes"
+                  aviso="Tu rol no tiene permiso para registrar clientes."
+                >
+                  <ClienteNuevoPage />
+                </RutaConPermiso>
+              }
+            />
             <Route path="/ventas" element={<VentasPage />} />
           </Route>
         </Route>

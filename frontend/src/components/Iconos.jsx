@@ -79,3 +79,12 @@ export function IconoCandado() {
     </svg>
   )
 }
+
+export function IconoAgregar() {
+  return (
+    <svg {...base} width={18} height={18}>
+      <path d="M12 5v14" />
+      <path d="M5 12h14" />
+    </svg>
+  )
+}
