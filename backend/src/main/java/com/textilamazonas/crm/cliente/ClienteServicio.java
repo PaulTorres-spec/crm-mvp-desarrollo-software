@@ -8,6 +8,15 @@ import com.textilamazonas.crm.auth.CredencialesInvalidasException;
 import com.textilamazonas.crm.auth.Usuario;
 import com.textilamazonas.crm.auth.UsuarioRepositorio;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import com.textilamazonas.crm.common.PaginaRespuesta;
+
 /** Lógica del CU03 Registrar cliente (las reglas del CU04 ya se validaron en ClienteSolicitud). */
 @Service
 public class ClienteServicio {
@@ -59,5 +68,21 @@ public class ClienteServicio {
         Cliente cliente = clientes.findById(id)
                 .orElseThrow(ClienteNoEncontradoException::new);
         return ClienteRespuesta.de(cliente);
+    }
+
+        /** CU05 Buscar cliente: una página de resultados, ordenada por razón social. */
+    @Transactional(readOnly = true)
+    public PaginaRespuesta<ClienteResumen> buscar(ClienteBusqueda busqueda) {
+        // Sin filtro de tipo = los tres tipos (así la consulta nunca recibe null)
+        List<TipoCliente> tipos = (busqueda.tipoCliente() == null)
+                ? List.of(TipoCliente.values())
+                : List.of(TipoCliente.valueOf(busqueda.tipoCliente()));
+
+        // "id" desempata: dos clientes con la misma razón social salen siempre en el mismo orden
+        Pageable pagina = PageRequest.of(busqueda.pagina(), busqueda.tamano(), Sort.by("razonSocial", "id"));
+
+        Page<ClienteResumen> resultado = clientes.buscar(busqueda.texto(), tipos, pagina)
+                .map(ClienteResumen::de);
+        return PaginaRespuesta.de(resultado);
     }
 }

@@ -16,6 +16,8 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.textilamazonas.crm.common.PaginaRespuesta;
+
 /** Endpoints de clientes (contrato M1: CU03 y CU04). */
 @RestController
 @RequestMapping("/api/clientes")
@@ -37,6 +39,12 @@ public class ClienteControlador {
         return ResponseEntity.created(ubicacion).body(creado);
     }
 
+        /** CU05 Buscar cliente. Ejemplo: GET /api/clientes?texto=gamarra&tipoCliente=CONFECCIONISTA&pagina=0&tamano=8 */
+    @GetMapping
+    public PaginaRespuesta<ClienteResumen> buscar(@Valid ClienteBusqueda busqueda) {
+        return clienteServicio.buscar(busqueda);
+    }
+    
         /** CU06 Ver detalle. Cualquier rol con sesión (SecurityConfig ya exige el token). */
     @GetMapping("/{id}")
     public ClienteRespuesta obtener(@PathVariable Long id) {
