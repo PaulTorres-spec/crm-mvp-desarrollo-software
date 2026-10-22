@@ -13,6 +13,8 @@ import RutaProtegida from './components/RutaProtegida.jsx'
 import RutaConPermiso from './components/RutaConPermiso.jsx'
 import { puedeRegistrarClientes } from './sesion/permisos.js'
 
+import ClienteDetallePage from './pages/ClienteDetallePage.jsx'
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -36,6 +38,7 @@ export default function App() {
                 </RutaConPermiso>
               }
             />
+            <Route path="/clientes/:id" element={<ClienteDetallePage />} />
             <Route path="/ventas" element={<VentasPage />} />
           </Route>
         </Route>

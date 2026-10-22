@@ -18,3 +18,10 @@ export function formatearTelefono(telefono) {
   if (telefono.length === 7) return telefono.replace(/(\d{3})(\d{4})/, '$1 $2')
   return telefono
 }
+
+/** "2026-10-07T19:42:01" → "07/10/2026" (se corta el texto: así no influye la zona horaria). */
+export function formatearFecha(fechaIso) {
+  if (!fechaIso) return ''
+  const [anio, mes, dia] = fechaIso.slice(0, 10).split('-')
+  return `${dia}/${mes}/${anio}`
+}

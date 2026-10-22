@@ -412,3 +412,23 @@ h1, h2, h3, h4, h5, h6 {
 .sel-pagina:disabled {
   opacity: 0.35;
 }
+
+/* ===== Detalle del cliente (pantalla 04 del prototipo) ===== */
+.sel-dato {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--sel-borde);
+}
+
+.sel-dato dt {
+  font-weight: 400;
+  color: var(--sel-cafe);
+}
+
+.sel-dato dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
