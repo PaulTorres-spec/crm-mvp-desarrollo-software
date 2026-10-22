@@ -12,6 +12,8 @@ import com.textilamazonas.crm.auth.CredencialesInvalidasException;
 
 import com.textilamazonas.crm.cliente.DocumentoDuplicadoException;
 
+import com.textilamazonas.crm.cliente.ClienteNoEncontradoException;
+
 /**
  * Convierte las excepciones en respuestas con el formato estándar de error.
  */
@@ -41,5 +43,12 @@ public class ManejadorGlobalErrores {
                 List.of(new ErrorRespuesta.CampoError("numeroDocumento", ex.getMessage()));
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ErrorRespuesta.de(409, "DUPLICADO", ex.getMessage(), errores));
+    }
+
+        /** 404: el cliente pedido no existe (CU06, CU07). */
+    @ExceptionHandler(ClienteNoEncontradoException.class)
+    public ResponseEntity<ErrorRespuesta> noEncontrado(ClienteNoEncontradoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ErrorRespuesta.de(404, "NO_ENCONTRADO", ex.getMessage(), List.of()));
     }
 }

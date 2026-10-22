@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 /** Endpoints de clientes (contrato M1: CU03 y CU04). */
 @RestController
 @RequestMapping("/api/clientes")
@@ -32,5 +35,11 @@ public class ClienteControlador {
         ClienteRespuesta creado = clienteServicio.registrar(solicitud, Long.valueOf(jwt.getSubject()));
         URI ubicacion = URI.create("/api/clientes/" + creado.id());
         return ResponseEntity.created(ubicacion).body(creado);
+    }
+
+        /** CU06 Ver detalle. Cualquier rol con sesión (SecurityConfig ya exige el token). */
+    @GetMapping("/{id}")
+    public ClienteRespuesta obtener(@PathVariable Long id) {
+        return clienteServicio.obtener(id);
     }
 }

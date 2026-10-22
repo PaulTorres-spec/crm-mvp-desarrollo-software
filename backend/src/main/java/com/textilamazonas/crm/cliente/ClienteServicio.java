@@ -52,4 +52,12 @@ public class ClienteServicio {
 
         return ClienteRespuesta.de(cliente);
     }
+
+        /** CU06 Ver detalle del cliente. */
+    @Transactional(readOnly = true)
+    public ClienteRespuesta obtener(Long id) {
+        Cliente cliente = clientes.findById(id)
+                .orElseThrow(ClienteNoEncontradoException::new);
+        return ClienteRespuesta.de(cliente);
+    }
 }
