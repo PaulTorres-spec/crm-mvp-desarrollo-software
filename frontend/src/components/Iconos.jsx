@@ -114,3 +114,39 @@ export function IconoAlerta() {
     </svg>
   )
 }
+
+
+export function IconoSiguiente() {
+  return (
+    <svg {...base} width={16} height={16}>
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  )
+}
+
+export function IconoBuscar() {
+  return (
+    <svg {...base} width={18} height={18}>
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.5-3.5" />
+    </svg>
+  )
+}
+
+export function IconoVer() {
+  return (
+    <svg {...base} width={18} height={18}>
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  )
+}
+
+export function IconoEditar() {
+  return (
+    <svg {...base} width={18} height={18}>
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+    </svg>
+  )
+}
