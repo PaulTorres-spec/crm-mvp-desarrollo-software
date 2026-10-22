@@ -283,3 +283,132 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0.125rem;
   color: var(--sel-exito);
 }
+
+
+/* ===== Clientes – lista y búsqueda (pantalla 03 del prototipo) ===== */
+.sel-buscador {
+  position: relative;
+  min-width: 240px;
+}
+
+.sel-buscador svg {
+  position: absolute;
+  top: 50%;
+  left: 0.875rem;
+  transform: translateY(-50%);
+  color: var(--sel-cafe);
+  pointer-events: none;
+}
+
+.sel-buscador .form-control,
+.sel-filtro {
+  --bs-body-bg: #fff;
+  font-size: var(--bs-body-font-size);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.sel-buscador .form-control {
+  padding-left: 2.5rem;
+}
+
+.sel-filtro {
+  width: auto;
+  min-width: 160px;
+}
+
+.sel-tabla-tarjeta {
+  --bs-body-bg: #fff;
+  overflow: hidden;
+}
+
+.sel-tabla {
+  --bs-table-bg: #fff;
+}
+
+.sel-tabla th {
+  padding: 0.875rem 1rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sel-cafe);
+  background: var(--sel-humo);
+  border-bottom-color: var(--sel-borde);
+}
+
+.sel-tabla td {
+  padding: 0.875rem 1rem;
+  border-color: var(--sel-borde);
+}
+
+.sel-tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Insignias de tipo de cliente */
+.sel-insignia {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sel-insignia-confeccionista {
+  background: var(--sel-vino-suave);
+  color: var(--sel-vino);
+}
+
+.sel-insignia-distribuidor {
+  background: var(--sel-arena-suave);
+  color: var(--sel-cafe);
+}
+
+.sel-insignia-institucional {
+  background: var(--sel-rojo-suave);
+  color: var(--sel-rojo);
+}
+
+/* Botones de acción de cada fila */
+.sel-accion {
+  display: inline-flex;
+  padding: 0.375rem;
+  border-radius: 0.375rem;
+  color: var(--sel-negro);
+}
+
+.sel-accion:hover {
+  background: var(--sel-humo);
+  color: var(--sel-vino);
+}
+
+/* Paginación */
+.sel-pagina {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--sel-negro);
+  font-weight: 500;
+}
+
+.sel-pagina:hover:not(:disabled) {
+  background: var(--sel-humo);
+}
+
+.sel-pagina.activa {
+  background: var(--sel-vino);
+  color: #fff;
+}
+
+.sel-pagina:disabled {
+  opacity: 0.35;
+}
