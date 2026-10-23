@@ -51,7 +51,7 @@ public record ClienteSolicitud(
     }
 
     /** Quita espacios al inicio y al final; un texto vacío pasa a null. */
-    private static String limpiar(String texto) {
+    static String limpiar(String texto) {
         if (texto == null || texto.isBlank()) {
             return null;
         }
@@ -59,7 +59,7 @@ public record ClienteSolicitud(
     }
 
     /** Para números: quita TODOS los espacios ("987 654 321" → "987654321"). */
-    private static String sinEspacios(String texto) {
+    static String sinEspacios(String texto) {
         String limpio = limpiar(texto);
         return limpio == null ? null : limpio.replace(" ", "");
     }
