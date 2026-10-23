@@ -98,4 +98,19 @@ public class Cliente {
     public LocalDateTime getFechaRegistro() { return fechaRegistro; }
     public Usuario getEditadoPor() { return editadoPor; }
     public LocalDateTime getFechaEdicion() { return fechaEdicion; }
+        /**
+     * CU07 Editar cliente: cambia solo los datos editables y deja constancia de quién y cuándo.
+     * El tipo y el número de documento no se tocan nunca.
+     */
+    public void editar(String razonSocial, TipoCliente tipoCliente, String personaContacto,
+            String telefono, String correo, String direccion, Usuario editor) {
+        this.razonSocial = razonSocial;
+        this.tipoCliente = tipoCliente;
+        this.personaContacto = personaContacto;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.direccion = direccion;
+        this.editadoPor = editor;
+        this.fechaEdicion = LocalDateTime.now();
+    }
 }

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.textilamazonas.crm.common.PaginaRespuesta;
 
+import org.springframework.web.bind.annotation.PutMapping;
+
 /** Endpoints de clientes (contrato M1: CU03 y CU04). */
 @RestController
 @RequestMapping("/api/clientes")
@@ -49,5 +51,14 @@ public class ClienteControlador {
     @GetMapping("/{id}")
     public ClienteRespuesta obtener(@PathVariable Long id) {
         return clienteServicio.obtener(id);
+    }
+
+        /** CU07 Editar cliente. Solo COMERCIAL y ADMIN; GERENCIA recibe 403. */
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('COMERCIAL', 'ADMIN')")
+    public ClienteRespuesta editar(@PathVariable Long id,
+            @Valid @RequestBody ClienteEdicionSolicitud solicitud,
+            @AuthenticationPrincipal Jwt jwt) {
+        return clienteServicio.editar(id, solicitud, Long.valueOf(jwt.getSubject()));
     }
 }

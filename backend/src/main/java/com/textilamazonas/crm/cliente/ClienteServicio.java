@@ -85,4 +85,26 @@ public class ClienteServicio {
                 .map(ClienteResumen::de);
         return PaginaRespuesta.de(resultado);
     }
+
+        /** CU07 Editar cliente. El editor es el usuario del token. */
+    @Transactional
+    public ClienteRespuesta editar(Long id, ClienteEdicionSolicitud solicitud, Long idUsuario) {
+        Cliente cliente = clientes.findById(id)
+                .orElseThrow(ClienteNoEncontradoException::new);
+        Usuario editor = usuarios.findById(idUsuario)
+                .orElseThrow(() -> new CredencialesInvalidasException(
+                        "Tu sesión ya no es válida. Inicia sesión de nuevo."));
+
+        cliente.editar(
+                solicitud.razonSocial(),
+                TipoCliente.valueOf(solicitud.tipoCliente()),
+                solicitud.personaContacto(),
+                solicitud.telefono(),
+                solicitud.correo(),
+                solicitud.direccion(),
+                editor);
+
+        // Sin save(): al terminar la transacción, Hibernate detecta los cambios y hace el UPDATE solo
+        return ClienteRespuesta.de(cliente);
+    }
 }
