@@ -51,4 +51,11 @@ public class ManejadorGlobalErrores {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorRespuesta.de(404, "NO_ENCONTRADO", ex.getMessage(), List.of()));
     }
+
+        /** 400: reglas que el servicio valida contra la BD (contrato M3: cliente/producto inexistente o repetido). */
+    @ExceptionHandler(DatosInvalidosException.class)
+    public ResponseEntity<ErrorRespuesta> datosInvalidos(DatosInvalidosException ex) {
+        return ResponseEntity.badRequest()
+                .body(ErrorRespuesta.de(400, "VALIDACION", ex.getMessage(), ex.getErrores()));
+    }
 }
