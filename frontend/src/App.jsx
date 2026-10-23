@@ -11,9 +11,11 @@ import AppLayout from './layouts/AppLayout.jsx'
 import RutaProtegida from './components/RutaProtegida.jsx'
 
 import RutaConPermiso from './components/RutaConPermiso.jsx'
-import { puedeRegistrarClientes } from './sesion/permisos.js'
 
 import ClienteDetallePage from './pages/ClienteDetallePage.jsx'
+
+import ClienteEditarPage from './pages/ClienteEditarPage.jsx'
+import { puedeEditarClientes, puedeRegistrarClientes } from './sesion/permisos.js'
 
 export default function App() {
   return (
@@ -39,6 +41,18 @@ export default function App() {
               }
             />
             <Route path="/clientes/:id" element={<ClienteDetallePage />} />
+            <Route
+              path="/clientes/:id/editar"
+              element={
+                <RutaConPermiso
+                  permiso={puedeEditarClientes}
+                  redirigirA="/clientes"
+                  aviso="Tu rol no tiene permiso para editar clientes."
+                >
+                  <ClienteEditarPage />
+                </RutaConPermiso>
+              }
+            />
             <Route path="/ventas" element={<VentasPage />} />
           </Route>
         </Route>

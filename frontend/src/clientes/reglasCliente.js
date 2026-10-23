@@ -86,5 +86,35 @@ export function validarCliente(datos) {
     errores.direccion = 'La dirección puede tener como máximo 200 caracteres.'
   }
 
+  
+
   return errores
+}
+
+
+/** Cliente que llega de la API → valores del formulario (los null pasan a texto vacío). */
+export function clienteAFormulario(cliente) {
+  return {
+    tipoDocumento: cliente.tipoDocumento,
+    numeroDocumento: cliente.numeroDocumento,
+    razonSocial: cliente.razonSocial,
+    tipoCliente: cliente.tipoCliente,
+    personaContacto: cliente.personaContacto ?? '',
+    telefono: cliente.telefono,
+    correo: cliente.correo ?? '',
+    direccion: cliente.direccion ?? '',
+  }
+}
+
+/** JSON para PUT /api/clientes/{id}: igual que el registro, pero SIN tipo ni número de documento. */
+export function prepararEdicion(datos) {
+  const cliente = prepararCliente(datos)
+  return {
+    razonSocial: cliente.razonSocial,
+    tipoCliente: cliente.tipoCliente,
+    personaContacto: cliente.personaContacto,
+    telefono: cliente.telefono,
+    correo: cliente.correo,
+    direccion: cliente.direccion,
+  }
 }
