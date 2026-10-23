@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router'
 
 import { pedir } from '../api/http.js'
 import { formatearFecha, formatearTelefono, nombreTipoCliente } from '../clientes/formatoCliente.js'
@@ -8,10 +7,13 @@ import InsigniaTipoCliente from '../components/InsigniaTipoCliente.jsx'
 import { puedeEditarClientes } from '../sesion/permisos.js'
 import { useSesion } from '../sesion/useSesion.js'
 
+import { Link, useLocation, useParams } from 'react-router'
+
 /** CU06 Ver detalle del cliente (pantalla 04 del prototipo). */
 export default function ClienteDetallePage() {
   const { id } = useParams() // "/clientes/5" → id = "5"
   const { usuario } = useSesion()
+  const exito = useLocation().state?.exito // aviso que deja la edición al guardar
   const [respuesta, setRespuesta] = useState({ id: null, cliente: null, error: null })
 
   // Un id que no es número no puede existir: ni siquiera se consulta al servidor
@@ -83,6 +85,8 @@ export default function ClienteDetallePage() {
   return (
     <section>
       {volver}
+      
+      {exito && <div className="alert alert-success" role="status">{exito}</div>}
 
       <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <div className="d-flex flex-wrap align-items-center gap-3">
