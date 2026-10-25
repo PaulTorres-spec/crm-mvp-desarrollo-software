@@ -466,3 +466,68 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--bs-border-radius);
   background: #fff;
 }
+
+/* Registrar venta (pantalla 09, CU08) */
+.sel-tabla-items {
+  --bs-table-bg: transparent;
+}
+
+.sel-tabla-items th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--sel-cafe);
+  white-space: nowrap;
+}
+
+.sel-tabla-items td {
+  vertical-align: top;
+}
+
+.sel-tabla-items .form-control {
+  min-width: 7rem;
+}
+
+.sel-tabla-items .form-select {
+  min-width: 14rem;
+}
+
+.sel-subtotal-item {
+  padding-top: 0.9rem;
+  white-space: nowrap;
+}
+
+.sel-resumen-montos {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.sel-resumen-montos dt {
+  font-weight: 400;
+  color: var(--sel-cafe);
+}
+
+.sel-resumen-montos dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.sel-resumen-montos .sel-resumen-total {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--sel-borde);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--sel-vino);
+}
+
+/* En pantallas anchas, el resumen acompaña al usuario al desplazarse */
+@media (min-width: 1200px) {
+  .sel-resumen-venta {
+    position: sticky;
+    top: 1rem;
+  }
+}

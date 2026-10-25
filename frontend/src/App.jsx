@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage.jsx'
 import ClientesPage from './pages/ClientesPage.jsx'
 import ClienteNuevoPage from './pages/ClienteNuevoPage.jsx'
 import VentasPage from './pages/VentasPage.jsx'
+import VentaNuevaPage from './pages/VentaNuevaPage.jsx'
 import NoEncontradaPage from './pages/NoEncontradaPage.jsx'
 
 import AppLayout from './layouts/AppLayout.jsx'
@@ -15,7 +16,9 @@ import RutaConPermiso from './components/RutaConPermiso.jsx'
 import ClienteDetallePage from './pages/ClienteDetallePage.jsx'
 
 import ClienteEditarPage from './pages/ClienteEditarPage.jsx'
-import { puedeEditarClientes, puedeRegistrarClientes } from './sesion/permisos.js'
+  import { puedeEditarClientes, puedeRegistrarClientes, puedeRegistrarVentas } from './sesion/permisos.js'
+
+
 
 export default function App() {
   return (
@@ -54,6 +57,18 @@ export default function App() {
               }
             />
             <Route path="/ventas" element={<VentasPage />} />
+            <Route
+                path="/ventas/nueva"
+                element={
+                  <RutaConPermiso
+                    permiso={puedeRegistrarVentas}
+                    redirigirA="/ventas"
+                    aviso="Tu rol no tiene permiso para registrar ventas."
+                  >
+                    <VentaNuevaPage />
+                  </RutaConPermiso>
+                }
+              />
           </Route>
         </Route>
 
