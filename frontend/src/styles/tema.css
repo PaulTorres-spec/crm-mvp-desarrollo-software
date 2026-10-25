@@ -440,3 +440,29 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--sel-vino);
   border: 0;
 }
+
+/* Selector de cliente (pantalla 09, CU09) */
+.sel-selector {
+  position: relative;
+}
+
+.sel-selector-resultados {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  max-height: 18rem;
+  overflow-y: auto;
+  box-shadow: 0 0.5rem 1rem rgba(10, 9, 8, 0.12);
+}
+
+.sel-cliente-elegido {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--sel-borde);
+  border-radius: var(--bs-border-radius);
+  background: #fff;
+}
