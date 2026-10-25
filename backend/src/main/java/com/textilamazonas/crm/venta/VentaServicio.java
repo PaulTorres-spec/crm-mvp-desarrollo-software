@@ -22,9 +22,21 @@ import com.textilamazonas.crm.common.ErrorRespuesta.CampoError;
 import com.textilamazonas.crm.producto.Producto;
 import com.textilamazonas.crm.producto.ProductoRepositorio;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 /** Lógica del CU08 Registrar venta y CU09 Asociar venta a cliente (las reglas de forma ya se validaron en VentaSolicitud). */
 @Service
 public class VentaServicio {
+    /** "Sin fecha" se traduce a fechas extremas: así la consulta nunca recibe null. */
+    private static final LocalDate SIN_INICIO = LocalDate.of(1900, 1, 1);
+    private static final LocalDate SIN_FIN = LocalDate.of(9999, 12, 31);
 
     private final VentaRepositorio ventas;
     private final ClienteRepositorio clientes;
@@ -95,5 +107,37 @@ public class VentaServicio {
     /** V-AAAA-NNNN: año actual + correlativo de la secuencia con al menos 4 dígitos (V-2026-0001). */
     private String siguienteNumero() {
         return String.format("V-%d-%04d", Year.now().getValue(), ventas.siguienteCorrelativo());
+    }
+        /** CU10 Consultar ventas + CU11 Filtrar por fecha o cliente. */
+    @Transactional(readOnly = true)
+    public VentaPaginaRespuesta buscar(VentaBusqueda busqueda) {
+        if (busqueda.desde() != null && busqueda.hasta() != null
+                && busqueda.desde().isAfter(busqueda.hasta())) {
+            throw new DatosInvalidosException(List.of(
+                    new CampoError("hasta", "La fecha final no puede ser anterior a la inicial.")));
+        }
+
+        // Filtros ausentes → valores que no filtran nada (fechas extremas, cliente 0 = todos)
+        LocalDate desde = (busqueda.desde() == null) ? SIN_INICIO : busqueda.desde();
+        LocalDate hasta = (busqueda.hasta() == null) ? SIN_FIN : busqueda.hasta();
+        long clienteId = (busqueda.clienteId() == null) ? 0 : busqueda.clienteId();
+
+        // Más recientes primero; "id" desempata dos ventas del mismo día (mismo orden que el número)
+        Pageable pagina = PageRequest.of(busqueda.pagina(), busqueda.tamano(),
+                Sort.by(Sort.Direction.DESC, "fecha", "id"));
+
+        Page<VentaResumen> resultado = ventas.buscar(desde, hasta, clienteId, pagina)
+                .map(VentaResumen::de);
+        BigDecimal montoTotal = ventas.sumarTotal(desde, hasta, clienteId)
+                .setScale(2, RoundingMode.HALF_UP);
+        return VentaPaginaRespuesta.de(resultado, montoTotal);
+    }
+
+    /** CU10 Ver detalle de una venta (cliente, líneas y montos). */
+    @Transactional(readOnly = true)
+    public VentaRespuesta obtener(Long id) {
+        return ventas.findById(id)
+                .map(VentaRespuesta::de)
+                .orElseThrow(VentaNoEncontradaException::new);
     }
 }

@@ -14,6 +14,8 @@ import com.textilamazonas.crm.cliente.DocumentoDuplicadoException;
 
 import com.textilamazonas.crm.cliente.ClienteNoEncontradoException;
 
+import com.textilamazonas.crm.venta.VentaNoEncontradaException;
+
 /**
  * Convierte las excepciones en respuestas con el formato estándar de error.
  */
@@ -24,7 +26,8 @@ public class ManejadorGlobalErrores {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorRespuesta> validacion(MethodArgumentNotValidException ex) {
         List<ErrorRespuesta.CampoError> errores = ex.getBindingResult().getFieldErrors().stream()
-                .map(error -> new ErrorRespuesta.CampoError(error.getField(), error.getDefaultMessage()))
+                .map(error -> new ErrorRespuesta.CampoError(error.getField(),
+                error.isBindingFailure() ? "El valor no tiene un formato válido." : error.getDefaultMessage()))
                 .toList();
         return ResponseEntity.badRequest()
                 .body(ErrorRespuesta.de(400, "VALIDACION", "Hay campos con errores.", errores));
@@ -45,9 +48,9 @@ public class ManejadorGlobalErrores {
                 .body(ErrorRespuesta.de(409, "DUPLICADO", ex.getMessage(), errores));
     }
 
-        /** 404: el cliente pedido no existe (CU06, CU07). */
-    @ExceptionHandler(ClienteNoEncontradoException.class)
-    public ResponseEntity<ErrorRespuesta> noEncontrado(ClienteNoEncontradoException ex) {
+       /** 404: el cliente o la venta pedidos no existen (CU06, CU07, CU10). */
+    @ExceptionHandler({ ClienteNoEncontradoException.class, VentaNoEncontradaException.class })
+    public ResponseEntity<ErrorRespuesta> noEncontrado(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorRespuesta.de(404, "NO_ENCONTRADO", ex.getMessage(), List.of()));
     }

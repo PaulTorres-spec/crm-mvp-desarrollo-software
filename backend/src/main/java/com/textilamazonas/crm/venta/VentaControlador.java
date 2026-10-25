@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import jakarta.validation.Valid;
 
 /** Endpoints de ventas (contrato M3). */
@@ -31,5 +34,17 @@ public class VentaControlador {
             @AuthenticationPrincipal Jwt jwt) {
         VentaRespuesta creada = ventaServicio.registrar(solicitud, Long.valueOf(jwt.getSubject()));
         return ResponseEntity.created(URI.create("/api/ventas/" + creada.id())).body(creada);
+    }
+
+    /** CU10 + CU11. Ejemplo: GET /api/ventas?desde=2026-10-01&hasta=2026-10-31&clienteId=1&pagina=0&tamano=8 */
+    @GetMapping
+    public VentaPaginaRespuesta buscar(@Valid VentaBusqueda busqueda) {
+        return ventaServicio.buscar(busqueda);
+    }
+
+    /** CU10 Ver detalle de una venta. Cualquier rol con sesión. */
+    @GetMapping("/{id}")
+    public VentaRespuesta obtener(@PathVariable Long id) {
+        return ventaServicio.obtener(id);
     }
 }
