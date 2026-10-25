@@ -13,3 +13,10 @@ const ROLES_QUE_EDITAN_CLIENTES = ['COMERCIAL', 'ADMIN']
 export function puedeEditarClientes(usuario) {
   return ROLES_QUE_EDITAN_CLIENTES.includes(usuario?.rol)
 }
+
+/** CU08: igual que el POST de VentaControlador → hasAnyRole('COMERCIAL', 'ADMIN'). */
+const ROLES_QUE_REGISTRAN_VENTAS = ['COMERCIAL', 'ADMIN']
+
+export function puedeRegistrarVentas(usuario) {
+  return ROLES_QUE_REGISTRAN_VENTAS.includes(usuario?.rol)
+}
