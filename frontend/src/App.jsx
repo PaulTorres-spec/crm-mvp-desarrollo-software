@@ -16,9 +16,9 @@ import RutaConPermiso from './components/RutaConPermiso.jsx'
 import ClienteDetallePage from './pages/ClienteDetallePage.jsx'
 
 import ClienteEditarPage from './pages/ClienteEditarPage.jsx'
-  import { puedeEditarClientes, puedeRegistrarClientes, puedeRegistrarVentas } from './sesion/permisos.js'
+import { puedeEditarClientes, puedeRegistrarClientes, puedeRegistrarVentas } from './sesion/permisos.js'
 
-
+import VentaDetallePage from './pages/VentaDetallePage.jsx'
 
 export default function App() {
   return (
@@ -68,7 +68,10 @@ export default function App() {
                     <VentaNuevaPage />
                   </RutaConPermiso>
                 }
-              />
+            />
+
+            <Route path="/ventas/:id" element={<VentaDetallePage />} />
+
           </Route>
         </Route>
 
