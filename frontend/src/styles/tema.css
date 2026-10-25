@@ -531,3 +531,27 @@ h1, h2, h3, h4, h5, h6 {
     top: 1rem;
   }
 }
+
+/* Ventas – consulta (pantalla 08, CU10/CU11) */
+.sel-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--sel-arena-suave);
+  color: var(--sel-cafe);
+  font-weight: 500;
+}
+
+.sel-chip-total {
+  background: var(--sel-vino-suave);
+  color: var(--sel-vino);
+  font-weight: 600;
+}
+
+/* Alinea los botones con los campos (que tienen etiqueta arriba) en pantallas anchas */
+@media (min-width: 992px) {
+  .sel-filtros-acciones {
+    padding-top: 1.85rem;
+  }
+}

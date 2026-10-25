@@ -6,11 +6,24 @@ const MAXIMO = 99999.99
 const HASTA_DOS_DECIMALES = /^\d+(\.\d{1,2})?$/
 
 /** Fecha de hoy "AAAA-MM-DD" según el reloj de la PC (toISOString usaría UTC: de noche daría mañana). */
+/** Date → "AAAA-MM-DD" con la fecha local de la PC (toISOString usaría UTC: de noche daría mañana). */
+function aTextoFecha(fecha) {
+  const mes = String(fecha.getMonth() + 1).padStart(2, '0')
+  const dia = String(fecha.getDate()).padStart(2, '0')
+  return `${fecha.getFullYear()}-${mes}-${dia}`
+}
+
+/** Fecha de hoy "AAAA-MM-DD". */
 export function fechaDeHoy() {
+  return aTextoFecha(new Date())
+}
+
+/** Primer y último día del mes actual: filtro por defecto de la pantalla 08. */
+export function rangoMesActual() {
   const hoy = new Date()
-  const mes = String(hoy.getMonth() + 1).padStart(2, '0')
-  const dia = String(hoy.getDate()).padStart(2, '0')
-  return `${hoy.getFullYear()}-${mes}-${dia}`
+  const inicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1)
+  const fin = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0) // día 0 del mes siguiente = último de este
+  return { desde: aTextoFecha(inicio), hasta: aTextoFecha(fin) }
 }
 
 /** Una fila vacía. Los números se guardan como texto, tal como los escribe el usuario. */
