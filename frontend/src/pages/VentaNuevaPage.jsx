@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 
 import { pedir } from '../api/http.js'
 import { formatearDocumento } from '../clientes/formatoCliente.js'
@@ -21,7 +21,9 @@ import {
 /** CU08 Registrar venta + CU09 Asociar venta a cliente (pantalla 09 del prototipo). */
 export default function VentaNuevaPage() {
   const navigate = useNavigate()
-  const [datos, setDatos] = useState(ventaVacia)
+    const location = useLocation()
+  // Si viene desde el detalle de un cliente (pantalla 04), ese cliente ya llega elegido
+  const [datos, setDatos] = useState(() => ({ ...ventaVacia(), cliente: location.state?.cliente ?? null }))
   const [errores, setErrores] = useState({})
   const [mensajeError, setMensajeError] = useState('')
   const [enviando, setEnviando] = useState(false)

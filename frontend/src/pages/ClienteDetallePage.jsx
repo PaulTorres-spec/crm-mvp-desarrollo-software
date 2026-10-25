@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
+import { Link, useLocation, useParams } from 'react-router'
 
 import { pedir } from '../api/http.js'
 import { formatearFecha, formatearTelefono, nombreTipoCliente } from '../clientes/formatoCliente.js'
-import { IconoEditar, IconoVolver } from '../components/Iconos.jsx'
+import { IconoAgregar, IconoEditar, IconoVolver } from '../components/Iconos.jsx'
 import InsigniaTipoCliente from '../components/InsigniaTipoCliente.jsx'
-import { puedeEditarClientes } from '../sesion/permisos.js'
+import VentasDelCliente from '../components/VentasDelCliente.jsx'
+import { puedeEditarClientes, puedeRegistrarVentas } from '../sesion/permisos.js'
 import { useSesion } from '../sesion/useSesion.js'
 
-import { Link, useLocation, useParams } from 'react-router'
-
-/** CU06 Ver detalle del cliente (pantalla 04 del prototipo). */
+/** CU06 Ver detalle del cliente + CU09 sus ventas (pantalla 04 del prototipo). */
 export default function ClienteDetallePage() {
   const { id } = useParams() // "/clientes/5" → id = "5"
   const { usuario } = useSesion()
@@ -85,20 +85,30 @@ export default function ClienteDetallePage() {
   return (
     <section>
       {volver}
-      
+
       {exito && <div className="alert alert-success" role="status">{exito}</div>}
 
+      {/* Cabecera: nombre e insignia a la izquierda, botones a la derecha */}
       <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <div className="d-flex flex-wrap align-items-center gap-3">
           <h1 className="h3 mb-0">{cliente.razonSocial}</h1>
           <InsigniaTipoCliente tipo={cliente.tipoCliente} />
         </div>
-        {puedeEditarClientes(usuario) && (
-          <Link to={`/clientes/${cliente.id}/editar`} className="btn btn-outline-primary d-inline-flex align-items-center gap-2">
-            <IconoEditar />
-            Editar cliente
-          </Link>
-        )}
+        <div className="d-flex flex-wrap gap-2">
+          {puedeEditarClientes(usuario) && (
+            <Link to={`/clientes/${cliente.id}/editar`} className="btn btn-outline-primary d-inline-flex align-items-center gap-2">
+              <IconoEditar />
+              Editar cliente
+            </Link>
+          )}
+          {puedeRegistrarVentas(usuario) && (
+            // state: el formulario de venta abre con este cliente ya elegido (CU09)
+            <Link to="/ventas/nueva" state={{ cliente }} className="btn btn-primary d-inline-flex align-items-center gap-2">
+              <IconoAgregar />
+              Registrar venta
+            </Link>
+          )}
+        </div>
       </div>
 
       <div className="row g-4 align-items-start">
@@ -122,9 +132,7 @@ export default function ClienteDetallePage() {
           <div className="card shadow-sm sel-form-tarjeta">
             <div className="card-body p-4">
               <h2 className="h5 mb-3">Ventas del cliente</h2>
-              <p className="text-secondary mb-0">
-                Las ventas del cliente se mostrarán aquí con el módulo de ventas (M3, CU09).
-              </p>
+              <VentasDelCliente clienteId={cliente.id} />
             </div>
           </div>
         </div>
