@@ -78,4 +78,57 @@ Si no hay resultados: `contenido` vacío y `totalElementos: 0` (no es un error).
 }
 ```
 
-`editadoPor` y
+`editadoPor` y `fechaEdicion` son `null` mientras nadie haya editado al cliente.
+
+**Errores:** 401, 404 `NO_ENCONTRADO`.
+
+## 4. CU07 — Editar cliente
+
+`PUT /api/clientes/{id}` · Roles: `COMERCIAL`, `ADMIN` (`GERENCIA` recibe 403)
+
+El **tipo y el número de documento no se pueden modificar** (pantalla 07). Si el JSON los incluye, se ignoran.
+
+**Cuerpo:**
+
+```json
+{
+  "razonSocial": "Distribuidora Textil del Norte E.I.R.L.",
+  "tipoCliente": "DISTRIBUIDOR",
+  "personaContacto": "Rosa Huamán Torres",
+  "telefono": "987654321",
+  "correo": "ventas@textilnorte.pe",
+  "direccion": "Av. España 1450 - Trujillo, La Libertad"
+}
+```
+
+**Reglas:** las mismas del CU04 (contrato M1, sección 6) para los campos editables.
+
+| Campo | Regla | Mensaje |
+|---|---|---|
+| `razonSocial` | Obligatoria; 3 a 150 caracteres | "Este campo es obligatorio." / "La razón social debe tener entre 3 y 150 caracteres." |
+| `tipoCliente` | Obligatorio; `CONFECCIONISTA`, `DISTRIBUIDOR` o `INSTITUCIONAL` | "Selecciona el tipo de cliente." |
+| `personaContacto` | Opcional; máximo 100 caracteres | "La persona de contacto puede tener como máximo 100 caracteres." |
+| `telefono` | Obligatorio; 7 a 9 dígitos (se quitan los espacios) | "Ingresa el teléfono." / "El teléfono debe tener entre 7 y 9 dígitos." |
+| `correo` | Opcional; formato válido; máximo 120 caracteres | "Ingresa un correo válido, por ejemplo nombre@empresa.com." |
+| `direccion` | Opcional; máximo 200 caracteres | "La dirección puede tener como máximo 200 caracteres." |
+
+Los textos se recortan (espacios al inicio y al final); un campo opcional vacío se guarda como `null`.
+
+**Responde 200 OK** con el detalle completo (mismo cuerpo de la sección 3), con `editadoPor` = usuario del token y `fechaEdicion` = fecha y hora del cambio.
+
+**Errores:** 400 `VALIDACION`, 401, 403 `SIN_PERMISO`, 404 `NO_ENCONTRADO`.
+
+## 5. Permisos del módulo
+
+| Endpoint | COMERCIAL | GERENCIA | ADMIN |
+|---|---|---|---|
+| `GET /api/clientes` | ✅ | ✅ | ✅ |
+| `GET /api/clientes/{id}` | ✅ | ✅ | ✅ |
+| `PUT /api/clientes/{id}` | ✅ | ❌ 403 | ✅ |
+
+## 6. Limitaciones conocidas
+
+- Si dos usuarios editan el mismo cliente al mismo tiempo, se guarda el último cambio (no hay control de versiones).
+- El documento no se puede corregir: un cliente mal registrado debe registrarse de nuevo.
+
+> Secciones 3 (final) a 6 completadas el 25/10/2026: en la versión fusionada en el PR #16 el texto se cortó al pegarlo.
