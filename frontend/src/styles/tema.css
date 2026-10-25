@@ -440,3 +440,94 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--sel-vino);
   border: 0;
 }
+
+/* Selector de cliente (pantalla 09, CU09) */
+.sel-selector {
+  position: relative;
+}
+
+.sel-selector-resultados {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  max-height: 18rem;
+  overflow-y: auto;
+  box-shadow: 0 0.5rem 1rem rgba(10, 9, 8, 0.12);
+}
+
+.sel-cliente-elegido {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--sel-borde);
+  border-radius: var(--bs-border-radius);
+  background: #fff;
+}
+
+/* Registrar venta (pantalla 09, CU08) */
+.sel-tabla-items {
+  --bs-table-bg: transparent;
+}
+
+.sel-tabla-items th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--sel-cafe);
+  white-space: nowrap;
+}
+
+.sel-tabla-items td {
+  vertical-align: top;
+}
+
+.sel-tabla-items .form-control {
+  min-width: 7rem;
+}
+
+.sel-tabla-items .form-select {
+  min-width: 14rem;
+}
+
+.sel-subtotal-item {
+  padding-top: 0.9rem;
+  white-space: nowrap;
+}
+
+.sel-resumen-montos {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.sel-resumen-montos dt {
+  font-weight: 400;
+  color: var(--sel-cafe);
+}
+
+.sel-resumen-montos dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.sel-resumen-montos .sel-resumen-total {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--sel-borde);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--sel-vino);
+}
+
+/* En pantallas anchas, el resumen acompaña al usuario al desplazarse */
+@media (min-width: 1200px) {
+  .sel-resumen-venta {
+    position: sticky;
+    top: 1rem;
+  }
+}
