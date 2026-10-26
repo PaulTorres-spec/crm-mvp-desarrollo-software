@@ -50,8 +50,8 @@ public interface VentaRepositorio extends JpaRepository<Venta, Long> {
     BigDecimal sumarTotal(@Param("desde") LocalDate desde,
                           @Param("hasta") LocalDate hasta,
                           @Param("clienteId") long clienteId);
-                          
-        /** CU13: número de ventas con fecha entre desde y hasta (incluidos). Consulta derivada del nombre. */
+
+    /** CU13: número de ventas con fecha entre desde y hasta (incluidos). Consulta derivada del nombre. */
     long countByFechaBetween(LocalDate desde, LocalDate hasta);
 
     /**

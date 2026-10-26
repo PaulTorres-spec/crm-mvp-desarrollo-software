@@ -30,7 +30,7 @@ public interface ClienteRepositorio extends JpaRepository<Cliente, Long> {
                          @Param("tipos") Collection<TipoCliente> tipos,
                          Pageable pageable);
 
-         /** CU12: clientes registrados antes de un instante (total hasta el fin del periodo). Consulta derivada del nombre. */
+    /** CU12: clientes registrados antes de un instante (total hasta el fin del periodo). Consulta derivada del nombre. */
     long countByFechaRegistroBefore(LocalDateTime limite);
 
     /** CU12: clientes registrados en [inicio, fin) — intervalo semiabierto porque fecha_registro tiene hora. */
@@ -48,5 +48,5 @@ public interface ClienteRepositorio extends JpaRepository<Cliente, Long> {
             WHERE c.fechaRegistro < :limite
             GROUP BY c.tipoCliente
             """)
-            List<ClientesPorTipo> contarPorTipo(@Param("limite") LocalDateTime limite);
+    List<ClientesPorTipo> contarPorTipo(@Param("limite") LocalDateTime limite);
 }
