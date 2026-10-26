@@ -5,9 +5,8 @@ export const MAX_ITEMS = 20
 const MAXIMO = 99999.99
 const HASTA_DOS_DECIMALES = /^\d+(\.\d{1,2})?$/
 
-/** Fecha de hoy "AAAA-MM-DD" según el reloj de la PC (toISOString usaría UTC: de noche daría mañana). */
 /** Date → "AAAA-MM-DD" con la fecha local de la PC (toISOString usaría UTC: de noche daría mañana). */
-function aTextoFecha(fecha) {
+export function aTextoFecha(fecha) {
   const mes = String(fecha.getMonth() + 1).padStart(2, '0')
   const dia = String(fecha.getDate()).padStart(2, '0')
   return `${fecha.getFullYear()}-${mes}-${dia}`
