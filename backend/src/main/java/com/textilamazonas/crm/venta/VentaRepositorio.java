@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 /** Acceso a las tablas venta y detalle_venta (el detalle se guarda en cascada con la venta). */
 public interface VentaRepositorio extends JpaRepository<Venta, Long> {
 
@@ -48,4 +50,22 @@ public interface VentaRepositorio extends JpaRepository<Venta, Long> {
     BigDecimal sumarTotal(@Param("desde") LocalDate desde,
                           @Param("hasta") LocalDate hasta,
                           @Param("clienteId") long clienteId);
+                          
+        /** CU13: número de ventas con fecha entre desde y hasta (incluidos). Consulta derivada del nombre. */
+    long countByFechaBetween(LocalDate desde, LocalDate hasta);
+
+    /**
+     * CU13: cantidad y monto por mes entre dos fechas. YEAR() y MONTH() extraen partes de la fecha;
+     * los meses sin ventas NO salen (el servicio los rellena con 0).
+     */
+    @Query("""
+            SELECT new com.textilamazonas.crm.venta.VentasPorMes(
+                       YEAR(v.fecha), MONTH(v.fecha), COUNT(v), SUM(v.total))
+            FROM Venta v
+            WHERE v.fecha BETWEEN :desde AND :hasta
+            GROUP BY YEAR(v.fecha), MONTH(v.fecha)
+            ORDER BY YEAR(v.fecha), MONTH(v.fecha)
+            """)
+    List<VentasPorMes> sumarPorMes(@Param("desde") LocalDate desde,
+                                   @Param("hasta") LocalDate hasta);
 }
